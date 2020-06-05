@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+    font-size: 28px;  
+    padding-top: 150px;
+}
+h1.result {
+    margin: 0;
+    font-size: 111px;
+    color: green;
+}
