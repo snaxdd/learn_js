@@ -1,44 +1,59 @@
 "use strict";
 
-const arr = [
-    "29123",
-    "3345",
-    "12354",
-    "442362",
-    "232153",
-    "131225",
-    "432355"
-];
-
-const showNumbers = function (arr) {
-    arr.forEach(element => {
-        if (element[0] === "2" || element[0] === "4") {
-            console.log(element);
-        }
-    });
-};
-
-showNumbers(arr);
-
-const numberDivider = function (n) {
-    let count = 0;
-
-    for (let i = 1; i <= n; i++) {
-        if (n % i === 0) {
-            count++;
-        }
+const generateNum = function (max) {
+    function getNumber() {
+        return Math.ceil(Math.random() * max);
     }
 
-    return count;
+    return getNumber();
 };
 
-const primeNumber = function (n) {
-    for (let i = 1; i <= n; i++) {
-        if ( numberDivider(i) === 2 ) {
-            console.log(`${i} - делители этого числа 1 и ${i}`);
+const isNumber = function (num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+};
+
+const startAGame = function () {
+    const ourNumber = generateNum(100);
+
+    const gameResult = function (secretNum) {
+        return function (userNumber) {
+            function compareNumbers() {
+                if (userNumber > secretNum) {
+                    return "Загаданное число меньше";
+                } else if (userNumber < secretNum) {
+                    return "Загаданное число больше";
+                } else {
+                    return true;
+                }
+            }
+
+            return compareNumbers();
+        };
+    };
+
+    const userAnswer = function (message) {
+        const answer = prompt(message);
+
+        if (isNumber(answer)) {
+            if ( gameResult(ourNumber)(answer) === true) {
+                return alert("Поздравляем Вы выйграли!");
+            } else {
+                return userAnswer( gameResult(ourNumber)(answer) );
+
+            }
+        } else if ( answer === null) {
+            return alert("Хорошего дня!");
         }
-    }
+
+        userAnswer("Введите корректное значение");
+    };
+
+    userAnswer("Введите число от 1 до 100");
+
 };
 
-primeNumber(100);
+const letsPlay = confirm("Сыграем в игру \"Угадай число?\"");
 
+if (letsPlay) {
+    startAGame();
+}
