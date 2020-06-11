@@ -15,6 +15,8 @@ const isNumber = function (num) {
 const startAGame = function () {
     const ourNumber = generateNum(100);
 
+    let userPoints = 10;
+
     const gameResult = function (secretNum) {
         return function (userNumber) {
             function compareNumbers() {
@@ -36,9 +38,27 @@ const startAGame = function () {
 
         if (isNumber(answer)) {
             if (gameResult(ourNumber)(answer) === true) {
-                return alert("Поздравляем Вы выйграли!");
+                const res = confirm("Поздравляем Вы выйграли! Хотели бы сыграть еще?");
+
+                if (res) {
+                    startAGame();
+                } else {
+                    return alert("Хорошего дня!");
+                }
             } else {
-                return userAnswer(gameResult(ourNumber)(answer));
+                userPoints--;
+
+                if (userPoints === 0) {
+                    const res = confirm("Попытки закончились, хотите сыграть еще ?");
+
+                    if (res) {
+                        startAGame();
+                    } else {
+                        return alert("Хорошего дня!");
+                    }
+                } else {
+                    return userAnswer(`${gameResult(ourNumber)(answer)} осталось ${userPoints} попыток`);
+                }
             }
         } else if (answer === null) {
             return alert("Хорошего дня!");
