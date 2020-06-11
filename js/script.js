@@ -14,6 +14,7 @@ const isNumber = function (num) {
 
 const startAGame = function () {
     const ourNumber = generateNum(100);
+    console.log(`Загаданное число = ${ourNumber}`);
 
     const gameResult = function (secretNum) {
         return function (userNumber) {
