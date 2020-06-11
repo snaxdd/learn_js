@@ -35,13 +35,12 @@ const startAGame = function () {
         const answer = prompt(message);
 
         if (isNumber(answer)) {
-            if ( gameResult(ourNumber)(answer) === true) {
+            if (gameResult(ourNumber)(answer) === true) {
                 return alert("Поздравляем Вы выйграли!");
             } else {
-                return userAnswer( gameResult(ourNumber)(answer) );
-
+                return userAnswer(gameResult(ourNumber)(answer));
             }
-        } else if ( answer === null) {
+        } else if (answer === null) {
             return alert("Хорошего дня!");
         }
 
@@ -49,7 +48,6 @@ const startAGame = function () {
     };
 
     userAnswer("Введите число от 1 до 100");
-
 };
 
 const letsPlay = confirm("Сыграем в игру \"Угадай число?\"");
