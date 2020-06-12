@@ -38,4 +38,7 @@ openButton.onclick = function () {
             weekList.append(p);
         }
     }
+
+    weekList.appendChild(weekList.childNodes[0]);  
 };
+
