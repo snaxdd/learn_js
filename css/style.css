@@ -1,0 +1,69 @@
+body {
+    background-color: #222222;
+}
+
+.container {
+    min-width: 400px;
+    background-color: lightslategray;
+    min-height: 600px;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+.header h1 {
+    font-size: 38px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 600;
+    margin-right: 50px;
+}
+
+.header {
+    padding: 25px 0 25px 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #333333;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    color: gray;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.button:hover {
+    background-color: lightslategray;
+    color: white;
+}
+
+.week_list {
+    background-color: rgb(240, 240, 240);
+}
+
+.week_list__item:nth-child(odd) {
+    background-color: rgb(200, 200, 200);
+}
+
+.week_list__item {
+    font-family: sans-serif;
+    padding: 10px;
+    font-weight: 400;;
+}
+
+.out_day {
+    font-style: italic;
+}
+
+.current_day {
+    font-weight: 600;
+}
+
+
