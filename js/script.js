@@ -172,7 +172,15 @@ console.log(`Уровень дохода - ${appData.getStatusIncome()}`);
 
 console.groupCollapsed("Наша программа включает в себя данные:");
 for (let key in appData) {
-    console.log(`${key} - ${appData[key]}`);
+    if (appData[key].constructor === Object) {
+        console.groupCollapsed(key + ":");
+        for (let data in appData[key]) {
+            console.log(`${data} - ${appData[key][data]}`);
+        }
+        console.groupEnd();
+    } else {
+        console.log(`${key}: ${appData[key]}`); 
+    }
 }
 console.groupEnd();
 
