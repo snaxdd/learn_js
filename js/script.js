@@ -5,11 +5,17 @@ function isNumber(num) {
 }
 
 function isText(text) {
-    if (text !== null && text !== "" && !isNumber(text)) {
+    if (text !== null && text !== "") {
+        for (let i = 0; i < text.length; i++) {
+            if (isNumber(text[i])) {
+                return false;
+            }
+        }
+    
         return true;
-    } else {
-        return false;
     }
+    
+    return false;
 }
 
 function promptValid(validType, question, defaultAnswer = "") {
@@ -21,7 +27,7 @@ function promptValid(validType, question, defaultAnswer = "") {
         } else {
             return promptValid(validType, question, defaultAnswer);
         }
-    }else if (validType === "number") {
+    } else if (validType === "number") {
         let result = prompt(question, defaultAnswer);
 
         if (isNumber(result)) {
@@ -41,6 +47,26 @@ function firstUppercase(str) {
         } else {
             res += str[i].toLowerCase();
         }
+    }
+
+    return res;
+}
+
+function splitString(str) {
+    if (str !== null && str !== "") {
+        return str.toLowerCase().split(",");
+    }
+}
+
+function massiveToString(mas) {
+    let res = "";
+
+    if (mas !== "" && mas !== undefined && mas !== null ) {
+        for (let i = 0; i < mas.length - 1; i++) {
+            res += firstUppercase(mas[i]) + ",";
+        }
+
+        res += firstUppercase(mas[mas.length - 1]);
     }
 
     return res;
@@ -70,8 +96,8 @@ let appData = {
             appData.income[itemIncome] = cashIncome;
         }
 
-        appData.addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую",
-            "Такси, кафе, интернет");
+        appData.addExpenses = splitString(prompt("Перечислите возможные расходы за рассчитываемый период через запятую",
+        "Такси, кафе, интернет"));
         appData.deposit = confirm("Есть ли у вас депозит в банке?");
 
         for (let i = 0; i < 2; i++) {
@@ -85,11 +111,6 @@ let appData = {
             appData.expenses[expenses] = Number(amount);
         }
 
-        appData.addExpenses = appData.addExpenses.split(", ");
-
-        for (let i = 0; i < appData.addExpenses.length; i++) {
-            appData.addExpenses[i] = firstUppercase(appData.addExpenses[i]);
-        }
     },
     getExpensesMonth: function () {
         for (let key in appData.expenses) {
@@ -98,7 +119,7 @@ let appData = {
     },
     getBudget: function () {
         appData.budgetMonth = appData.budget - appData.expensesMonth;
-        appData.budgetDay = appData.budgetMonth / 30;
+        appData.budgetDay = Math.ceil(appData.budgetMonth / 30);
     },
     getTargetMonth: function () {
         let res = Math.ceil(appData.mission / appData.budgetMonth);
@@ -120,13 +141,13 @@ let appData = {
             return "Что-то пошло не так";
         }
     },
-    getInfoDeposit: function() {
+    getInfoDeposit: function () {
         if (appData.deposit) {
             appData.percentDeposit = promptValid("number", "Какой годовой процент?", "10");
             appData.moneyDeposit = promptValid("number", "Какая сумма заложена?", "10000");
         }
     },
-    calcSavedMoney: function() {
+    calcSavedMoney: function () {
         return appData.budgetMonth * appData.period;
     }
 };
@@ -158,5 +179,5 @@ console.groupEnd();
 appData.getInfoDeposit();
 console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
 
-console.log(appData.addExpenses.join(', '));
+console.log(massiveToString(appData.addExpenses));
 
