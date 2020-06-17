@@ -76,14 +76,6 @@ function getDateStr() {
 
 dateA.innerHTML = getDateStr();
 
-function timeUpdate() {
-    newDate = new Date();
-    dateAInterval.innerHTML = getDateStr();
-    dateB.innerHTML = getDateWithZero();
-}
-
-setInterval(timeUpdate, 1000);
-
 function addZeroToNum(num) {
     if (String(num).length === 1) {
         return "0" + num;
@@ -93,11 +85,17 @@ function addZeroToNum(num) {
 }
 
 function getDateWithZero() {
-    let result = addZeroToNum(newDate.getUTCDate()) + "." + addZeroToNum(newDate.getMonth() + 1) + 
-    "." + newDate.getUTCFullYear() + " - " + addZeroToNum(newDate.getHours()) + ":" + 
-    addZeroToNum(newDate.getMinutes()) + ":" + addZeroToNum(newDate.getSeconds());
+    let result = addZeroToNum(newDate.getUTCDate()) + "." + addZeroToNum(newDate.getMonth() + 1) +
+        "." + newDate.getUTCFullYear() + " - " + addZeroToNum(newDate.getHours()) + ":" +
+        addZeroToNum(newDate.getMinutes()) + ":" + addZeroToNum(newDate.getSeconds());
 
     return result;
 }
 
+function timeUpdate() {
+    newDate = new Date();
+    dateAInterval.innerHTML = getDateStr();
+    dateB.innerHTML = getDateWithZero();
+}
 
+setInterval(timeUpdate, 1000);
