@@ -153,9 +153,9 @@ let appData = {
 };
 
 /*Interface elemets - buttons & checkboxes*/
-const calculate = document.querySelector("#start"),
-    incomeAddBtn = document.querySelector("[class=\"btn_plus income_add\"]"),
-    expensesAddBtn = document.querySelector("[class=\"btn_plus expenses_add\"]"),
+const calculate = document.getElementById("start"),
+    incomeAddBtn = document.getElementsByTagName("button")[0],
+    expensesAddBtn = document.getElementsByTagName("button")[1],
     depositCheckbox = document.querySelector("#deposit-check");
 
 /*Interface elemets - fields collections*/
