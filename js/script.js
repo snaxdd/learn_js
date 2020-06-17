@@ -79,6 +79,7 @@ dateA.innerHTML = getDateStr();
 function timeUpdate() {
     newDate = new Date();
     dateAInterval.innerHTML = getDateStr();
+    dateB.innerHTML = getDateWithZero();
 }
 
 setInterval(timeUpdate, 1000);
@@ -99,4 +100,4 @@ function getDateWithZero() {
     return result;
 }
 
-dateB.innerHTML = getDateWithZero();
+
