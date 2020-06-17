@@ -162,13 +162,13 @@ const calculate = document.querySelector("#start"),
 const additionalIncomeFields = document.querySelectorAll(".additional_income-item");
 
 /*Interface elemets - fields value`s*/
-const budgetMonthValue = document.querySelector(".budget_month-value"),
-    budgetDayValue = document.querySelector(".budget_day-value"),
-    expensesMonthValue = document.querySelector(".expenses_month-value"),
-    addIncomeValue = document.querySelector(".additional_income-value"),
-    addExpensesValue = document.querySelector(".additional_expenses-value"),
-    incomePeriodValue = document.querySelector(".income_period-value"),
-    targetMonthValue = document.querySelector(".target_month-value");
+const budgetMonthValue = document.getElementsByClassName("budget_month-value"),
+    budgetDayValue = document.getElementsByClassName("budget_day-value"),
+    expensesMonthValue = document.getElementsByClassName("expenses_month-value"),
+    addIncomeValue = document.getElementsByClassName("additional_income-value"),
+    addExpensesValue = document.getElementsByClassName("additional_expenses-value"),
+    incomePeriodValue = document.getElementsByClassName("income_period-value"),
+    targetMonthValue = document.getElementsByClassName("target_month-value");
 
 /*Interface elemets - fields*/
 const salaryAmountField = document.querySelector(".salary-amount"),
