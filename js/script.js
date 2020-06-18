@@ -88,6 +88,14 @@ let appData = {
     budgetDay: 0,
     budgetMonth: 0,
     expensesMonth: 0,
+    start: function () {
+        do {
+            money = prompt("Ваш месячный доход?", 44500);
+        } while (!isNumber(money));
+    
+        money = Number(money);
+        appData.budget = money;
+    },
     asking: function () {
         if (confirm("Есть ли у Вас доп. заработок?")) {
             let itemIncome = promptValid("text", "Какой доп заработок?"),
@@ -180,16 +188,6 @@ const salaryAmountField = document.querySelector(".salary-amount"),
     targetAmountField = document.querySelector(".target-amount"),
     periodSelectRange = document.querySelector(".period-select");
 
-const start = function () {
-    do {
-        money = prompt("Ваш месячный доход?", 44500);
-    } while (!isNumber(money));
-
-    money = Number(money);
-    appData.budget = money;
-};
-
-start();
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
