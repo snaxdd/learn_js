@@ -144,30 +144,6 @@ let appData = {
         appData.getExpensesMonth();
         appData.getBudget();
     },
-    asking: function () {
-        /*if (confirm("Есть ли у Вас доп. заработок?")) {
-            let itemIncome = promptValid("text", "Какой доп заработок?"),
-                cashIncome = promptValid("number", "Сколько в месяц Вы зарабатываете на этом?");
-
-            appData.income[itemIncome] = cashIncome;
-        }
-
-        appData.addExpenses = splitString(prompt("Перечислите возможные расходы за рассчитываемый период через запятую",
-            "Такси, кафе, интернет"));
-        appData.deposit = confirm("Есть ли у вас депозит в банке?");
-
-        for (let i = 0; i < 2; i++) {
-            let expenses = promptValid("text", "Введите обязательную статью расходов"),
-                amount = prompt("Во сколько это обойдется?");
-
-            while (!isNumber(amount)) {
-                amount = prompt("Во сколько это обойдется?");
-            }
-
-            appData.expenses[expenses] = Number(amount);
-        }*/
-
-    },
     getExpensesMonth: function () {
         for (let key in appData.expenses) {
             appData.expensesMonth += +appData.expenses[key];
