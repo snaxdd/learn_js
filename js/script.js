@@ -267,6 +267,13 @@ console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney
 //console.log(massiveToString(appData.addExpenses));
 
 calculate.addEventListener("click", appData.start);
+salaryAmountField.addEventListener("input", function() {
+    if (salaryAmountField.value !== "") {
+        calculate.disabled = false;
+    } else {
+        calculate.disabled = true;
+    }
+});
 expensesAddBtn.addEventListener("click", appData.addExpensesBlock);
 incomeAddBtn.addEventListener("click", appData.addIncomeBlock);
 periodSelectRange.addEventListener("input", appData.periodAmountChange);
