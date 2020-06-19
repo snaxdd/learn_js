@@ -72,6 +72,49 @@ function massiveToString(mas) {
     return res;
 }
 
+function rusTextValid(field) {
+    let newStr = "",
+        regexp = /[А-я]/,
+        value = field.value;
+
+    for (let i = 0; i < value.length; i++) {
+        if (regexp.test(value[i]) || value[i] === " " || value[i] === ",") {
+            newStr += value[i];
+        }
+    }
+    
+    return newStr;
+}
+
+function addTextValidationEvent(collection) {
+    collection.forEach(function(item) {
+        item.addEventListener("input", function() {
+            item.value = rusTextValid(item);
+        });
+    }); 
+}
+
+function digitsValid(field) {
+    let newDigits = "",
+        value = field.value;
+
+    for (let i = 0; i < value.length; i++) {
+        if (isNumber(value[i])) {
+            newDigits += value[i];
+        }
+    }
+    
+    return newDigits;
+}
+
+function addDigitstValidationEvent(collection) {
+    collection.forEach(function(item) {
+        item.addEventListener("input", function() {
+            item.value = digitsValid(item);
+        });
+    }); 
+}
+
 /*Interface elemets - buttons & checkboxes*/
 const calculate = document.getElementById("start"),
     incomeAddBtn = document.getElementsByTagName("button")[0],
@@ -99,7 +142,9 @@ let salaryAmountField = document.querySelector(".salary-amount"),
     targetAmountField = document.querySelector(".target-amount"),
     periodSelectRange = document.querySelector(".period-select"),
     incomeItems = document.querySelectorAll(".income-items"),
-    periodAmount = document.querySelector(".period-amount");
+    periodAmount = document.querySelector(".period-amount"),
+    namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]"),
+    digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
 
 let appData = {
     income: {},
@@ -116,12 +161,22 @@ let appData = {
     expensesMonth: 0,
     addExpensesBlock: function() {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
+
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesAddBtn);
         expensesItems = document.querySelectorAll(".expenses-items");
+
+        expensesItems[expensesItems.length - 1].querySelector(".expenses-title").value = "";
+        expensesItems[expensesItems.length - 1].querySelector(".expenses-amount").value = "";
 
         if (expensesItems.length === 3) {
             expensesAddBtn.style.display = "none";
         }
+
+        namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
+        addTextValidationEvent(namesPlaceholderFields);
+
+        digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
+        addDigitstValidationEvent(digitsPlaceholderFields);
     },
     getExpenses: function() {
         expensesItems.forEach(function(item) {
@@ -138,9 +193,18 @@ let appData = {
         incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeAddBtn);
         incomeItems = document.querySelectorAll(".income-items");
 
+        incomeItems[incomeItems.length - 1].querySelector(".income-title").value = "";
+        incomeItems[incomeItems.length - 1].querySelector(".income-amount").value = "";
+        
         if (incomeItems.length === 3) {
             incomeAddBtn.style.display = "none";
         }
+
+        namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
+        addTextValidationEvent(namesPlaceholderFields);
+
+        digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
+        addDigitstValidationEvent(digitsPlaceholderFields);
     },
     getIncome: function() {
         incomeItems.forEach(function(item) {
@@ -265,7 +329,8 @@ appData.getInfoDeposit();
 console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
 
 //console.log(massiveToString(appData.addExpenses));
-
+addDigitstValidationEvent(digitsPlaceholderFields);
+addTextValidationEvent(namesPlaceholderFields);
 calculate.addEventListener("click", appData.start);
 salaryAmountField.addEventListener("input", function() {
     if (salaryAmountField.value !== "") {
