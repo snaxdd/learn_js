@@ -102,10 +102,10 @@ const userSearch = function(data, login, pass) {
             if (data[i].login === login && data[i].pass === pass) {
                 return data[i];
             } 
-        }
+        }  
+    } 
 
-        return false;
-    }
+    return false;
 };
 
 const userAutorization = function() {
@@ -140,5 +140,3 @@ loginButton.addEventListener("click", function() {
 });
 
 userListLoad(userData);
-
-console.log(userSearch(userData, "ramzes666", "12345"));
