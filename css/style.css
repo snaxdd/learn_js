@@ -6,8 +6,9 @@
 body {
     background-color: rgb(235, 235, 235);
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
     height: 100vh;
     min-height: 600px;
     padding-top: 75px;
@@ -25,7 +26,8 @@ body {
 }
 
 .login_frame__notifications_box {
-    font-family: sans-serif;
+    font-family: monospace;
+    font-size: 18px;
     color: rgb(240, 237, 246);
     font-weight: 600;
     width: 100%;
@@ -75,4 +77,38 @@ body {
     border: 2px solid rgb(64, 68, 85);
     background-color: rgba(0, 0, 0, 0);
     color: rgb(64, 68, 85);
+}
+
+.user_frame {
+    padding-top: 50px;
+}
+
+.user_frame__list {
+    list-style: none;
+}
+
+.user_frame__list li {
+    background-color: #fff;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user_frame__list__close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(64, 68, 85);
+    font-family: monospace;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    cursor: pointer;
 }
