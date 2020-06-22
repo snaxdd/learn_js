@@ -1,0 +1,22 @@
+body {
+    background-color: #3C4974;
+    padding-top: 50px;
+    transition: ease-out 0.5s;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-family: monospace;
+    font-size: 32px;
+    text-align: center;
+    align-items: center;
+}
+
+.wrapper button {
+    margin-top: 25px;
+    padding: 10px 25px;
+    cursor: pointer;
+}
