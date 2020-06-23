@@ -20,14 +20,14 @@ const months = [
     "Декабря",
 ];
 
-const recordToStorage = function(data) {
+const recordToStorage = function(data, key) {
     const serialObj = JSON.stringify(data);
 
-    localStorage.setItem("userData", serialObj);
+    localStorage.setItem(key, serialObj);
 };
 
-const readFromStorage = function() {
-    const returnObj = JSON.parse(localStorage.getItem("userData"));
+const readFromStorage = function(key) {
+    const returnObj = JSON.parse(localStorage.getItem(key));
 
     if (returnObj !== null) {
         return returnObj;
@@ -36,7 +36,7 @@ const readFromStorage = function() {
     }
 };
 
-const userData = readFromStorage();
+const userData = readFromStorage("userData");
 
 const userRegistration = function() {
     const obj = {
@@ -73,6 +73,27 @@ const userRegistration = function() {
     return obj;
 };
 
+const userSearch = function(data, login, pass) {
+    if (data.length !== 0) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].login === login && data[i].pass === pass) {
+                return data[i];
+            } 
+        }  
+    } 
+
+    return false;
+};
+
+const loggedIn = function(data) {
+    const currentUser = readFromStorage("currentUser");
+
+    if (data.login === currentUser.login) {
+        notificationSpan.innerText = "Привет аноним!";
+        recordToStorage({}, "currentUser");
+    }
+};
+
 const userListLoad = function(data) {
     userList.innerHTML = "";
 
@@ -90,22 +111,11 @@ const userListLoad = function(data) {
             remove.addEventListener("click", function() {
                 userData.splice(userData.indexOf(item), 1);
                 userListLoad(userData);
-                recordToStorage(userData);
+                recordToStorage(userData, "userData");
+                loggedIn(item);
             });
         });
     }
-};
-
-const userSearch = function(data, login, pass) {
-    if (data.length !== 0) {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].login === login && data[i].pass === pass) {
-                return data[i];
-            } 
-        }  
-    } 
-
-    return false;
 };
 
 const userAutorization = function() {
@@ -123,6 +133,7 @@ const userAutorization = function() {
     let result = userSearch(userData, login, pass);
 
     if (result !== false) {
+        recordToStorage(result, "currentUser");     
         notificationSpan.innerText = "Привет, " + result.firstName;
     } else {
         alert("Пользователь не найден");
@@ -131,7 +142,7 @@ const userAutorization = function() {
 
 regButton.addEventListener("click", function() {
     userData.push(userRegistration());
-    recordToStorage(userData);
+    recordToStorage(userData, "userData");
     userListLoad(userData);
 });
 
