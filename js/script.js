@@ -115,6 +115,14 @@ function addDigitstValidationEvent(collection) {
     });
 }
 
+function deleteAllNodeElems(parent, childClass) {
+    const elems = parent.querySelectorAll(childClass);
+
+    elems.forEach(function(item) {
+        item.remove();
+    });
+}
+
 /*Interface elemets - buttons & checkboxes*/
 const calculate = document.getElementById("start"),
     cancel = document.getElementById("cancel"),
@@ -148,6 +156,11 @@ let salaryAmountField = document.querySelector(".salary-amount"),
     digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]"),
     leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
 
+/*Interface elements - containers*/
+
+const incomeBlock = document.querySelector(".income"),
+    expensesBlock = document.querySelector(".expenses");
+
 function blockLeftSideInputs(data) {
     leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
 
@@ -155,10 +168,14 @@ function blockLeftSideInputs(data) {
         leftSideFieldsCollection.forEach(function (elem) {
             elem.disabled = true;
         });
+        incomeAddBtn.disabled = true;
+        expensesAddBtn.disabled = true;
     } else {
         leftSideFieldsCollection.forEach(function (elem) {
             elem.disabled = false;
         });
+        incomeAddBtn.disabled = false;
+        expensesAddBtn.disabled = false;
     }
 }
 
@@ -322,8 +339,10 @@ let appData = {
         allInputs.forEach(function (item) {
             item.value = "";
         });
-
+        
         periodSelectRange.value = 1;
+        periodAmount.innerText = 1;
+        depositCheckbox.checked = false;
         calculate.disabled = true;
         this.income = {};
         this.incomeMonth = 0;
@@ -337,6 +356,12 @@ let appData = {
         this.budgetDay = 0;
         this.budgetMonth = 0;
         this.expensesMonth = 0;
+
+        deleteAllNodeElems(incomeBlock, ".income-items");
+        deleteAllNodeElems(expensesBlock, ".expenses-items");
+
+        incomeBlock.querySelector(".income-title").after(incomeItems[0]);
+        expensesBlock.querySelector(".expenses-title").after(expensesItems[0]);
     }
 };
 
