@@ -362,6 +362,9 @@ let appData = {
 
         incomeBlock.querySelector(".income-title").after(incomeItems[0]);
         expensesBlock.querySelector(".expenses-title").after(expensesItems[0]);
+        
+        incomeAddBtn.style = "display: block;";
+        expensesAddBtn.style = "display: block;";
     }
 };
 
