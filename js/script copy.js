@@ -217,7 +217,7 @@ let appData = {
                 cashExpenses = item.querySelector(".expenses-amount").value;
 
             if (itemExpenses !== "" && cashExpenses !== "") {
-                appData.expenses[itemExpenses] = cashExpenses;
+                this.expenses[itemExpenses] = cashExpenses;
             }
         });
     },
@@ -282,7 +282,6 @@ let appData = {
         this.getIncome();
         this.getBudget();
         this.showResult();
-        console.log(appData);
     },
     showResult: function () {
         budgetMonthValue.value = this.budgetMonth;
