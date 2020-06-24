@@ -9,18 +9,24 @@ const DomElement = function() {
 };
 
 DomElement.prototype.createElement = function(parent) {
-    const newElem = document.createElement("div");
-    const styleString = "height: " + this.height + "; width: " + this.width + "; background: " + this.bg +
-    "; font-size: " + this.fontSize;
+    this.newElem = document.createElement("div");
+    this.styleString = "height: " + this.height + "; width: " + this.width + "; background: " + this.bg +
+    "; font-size: " + this.fontSize + ";";
 
     if (this.selector[0] === ".") {
-        newElem.setAttribute("class", this.selector.slice(1, this.selector.length));    
+        this.newElem.setAttribute("class", this.selector.slice(1, this.selector.length));    
     } else if (this.selector[0] === "#") {
-        newElem.setAttribute("id", this.selector.slice(1, this.selector.length));
+        this.newElem.setAttribute("id", this.selector.slice(1, this.selector.length));
     }
 
-    newElem.setAttribute("style", styleString);
-    document.querySelector(parent).append(newElem);
+    this.newElem.setAttribute("style", this.styleString);
+    document.querySelector(parent).append(this.newElem);
+};
+
+DomElement.prototype.addText = function(text, color) {
+    this.newElem.innerText = text;
+    this.styleString += " color: " + color + ";";
+    this.newElem.setAttribute("style", this.styleString);
 };
 
 const newElement = new DomElement();
@@ -32,3 +38,4 @@ newElement.bg = "#000";
 newElement.fontSize = "32px";
 
 newElement.createElement("body");
+newElement.addText("Новый текст", "white");
