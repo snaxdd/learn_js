@@ -14,9 +14,9 @@ DomElement.prototype.createElement = function(parent) {
     "; font-size: " + this.fontSize;
 
     if (this.selector[0] === ".") {
-        newElem.setAttribute("class", this.selector);    
+        newElem.setAttribute("class", this.selector.slice(1, this.selector.length));    
     } else if (this.selector[0] === "#") {
-        newElem.setAttribute("id", this.selector);
+        newElem.setAttribute("id", this.selector.slice(1, this.selector.length));
     }
 
     newElem.setAttribute("style", styleString);
