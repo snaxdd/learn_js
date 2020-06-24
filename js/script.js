@@ -29,79 +29,6 @@ let salaryAmountField = document.querySelector(".salary-amount"),
     digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]"),
     leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
 
-const isNumber = function(num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
-};
-
-const rusTextValid = function(field) {
-    let newStr = "",
-        regexp = /[А-я]/,
-        value = field.value;
-
-    for (let i = 0; i < value.length; i++) {
-        if (regexp.test(value[i]) || value[i] === " " || value[i] === ",") {
-            newStr += value[i];
-        }
-    }
-
-    return newStr;
-};
-
-const addTextValidationEvent = function(collection) {
-    collection.forEach(function (item) {
-        item.addEventListener("input", function () {
-            item.value = rusTextValid(item);
-        });
-    });
-};
-
-const digitsValid = function(field) {
-    let newDigits = "",
-        value = field.value;
-
-    for (let i = 0; i < value.length; i++) {
-        if (isNumber(value[i])) {
-            newDigits += value[i];
-        }
-    }
-
-    return newDigits;
-};
-
-const addDigitstValidationEvent = function(collection) {
-    collection.forEach(function (item) {
-        item.addEventListener("input", function () {
-            item.value = digitsValid(item);
-        });
-    });
-};
-
-const deleteAllNodeElems = function(parent, childClass) {
-    const elems = parent.querySelectorAll(childClass);
-
-    elems.forEach(function(item) {
-        item.remove();
-    });
-};
-
-const blockLeftSideInputs = function(data) {
-    leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
-
-    if (data) {
-        leftSideFieldsCollection.forEach(function (elem) {
-            elem.disabled = true;
-        });
-        incomeAddBtn.disabled = true;
-        expensesAddBtn.disabled = true;
-    } else {
-        leftSideFieldsCollection.forEach(function (elem) {
-            elem.disabled = false;
-        });
-        incomeAddBtn.disabled = false;
-        expensesAddBtn.disabled = false;
-    }
-};
-
 const AppData = function() {
     this.income = {};
     this.incomeMonth = 0;
@@ -129,15 +56,15 @@ AppData.prototype.addExpensesBlock = function() {
     if (expensesItems.length === 3) {
         expensesAddBtn.setAttribute("style", "display: none;");
     }
-
+    
     namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
-    addTextValidationEvent(namesPlaceholderFields);
-
+    this.addTextValidationEvent(namesPlaceholderFields);
+    
     digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
-    addDigitstValidationEvent(digitsPlaceholderFields);
+    this.addDigitstValidationEvent(digitsPlaceholderFields);
 };
 AppData.prototype.getExpenses = function() {
-    expensesItems.forEach( (item) => {
+    expensesItems.forEach((item) => {
         let itemExpenses = item.querySelector(".expenses-title").value,
             cashExpenses = item.querySelector(".expenses-amount").value;
 
@@ -159,13 +86,13 @@ AppData.prototype.addIncomeBlock = function() {
     }
 
     namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
-    addTextValidationEvent(namesPlaceholderFields);
+    this.addTextValidationEvent(namesPlaceholderFields);
 
     digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
-    addDigitstValidationEvent(digitsPlaceholderFields);
+    this.addDigitstValidationEvent(digitsPlaceholderFields);
 };
 AppData.prototype.getIncome = function() {
-    incomeItems.forEach( (item) => {
+    incomeItems.forEach((item) => {
         let itemIncome = item.querySelector(".income-title").value,
             cashIncome = item.querySelector(".income-amount").value;
 
@@ -181,7 +108,7 @@ AppData.prototype.getIncome = function() {
 AppData.prototype.getAddExpenses = function() {
     let addExpenses = addExpensesField.value.split(",");
 
-    addExpenses.forEach( (item) => {
+    addExpenses.forEach((item) => {
         item = item.trim();
 
         if (item !== "") {
@@ -190,7 +117,7 @@ AppData.prototype.getAddExpenses = function() {
     });
 };
 AppData.prototype.getAddIncome = function() {
-    additionalIncomeFields.forEach( (item) => {
+    additionalIncomeFields.forEach((item) => {
         let itemValue = item.value.trim();
 
         if (itemValue !== "") {
@@ -216,7 +143,7 @@ AppData.prototype.showResult = function() {
     addIncomeValue.value = this.addIncome.join(", ");
     targetMonthValue.value = this.getTargetMonth();
     incomePeriodValue.value = this.calcSavedMoney();
-    periodSelectRange.addEventListener("input",  () => {
+    periodSelectRange.addEventListener("input", () => {
         incomePeriodValue.value = this.calcSavedMoney();
     });
 };
@@ -263,7 +190,7 @@ AppData.prototype.reset = function() {
     allInputs.forEach(function (item) {
         item.value = "";
     });
-    
+
     periodSelectRange.value = 1;
     periodAmount.innerText = 1;
     depositCheckbox.checked = false;
@@ -281,29 +208,29 @@ AppData.prototype.reset = function() {
     this.budgetMonth = 0;
     this.expensesMonth = 0;
 
-    deleteAllNodeElems(incomeBlock, ".income-items");
-    deleteAllNodeElems(expensesBlock, ".expenses-items");
+    this.deleteAllNodeElems(incomeBlock, ".income-items");
+    this.deleteAllNodeElems(expensesBlock, ".expenses-items");
 
     incomeBlock.querySelector(".income-title").after(incomeItems[0]);
     expensesBlock.querySelector(".expenses-title").after(expensesItems[0]);
-    
+
     incomeAddBtn.setAttribute("style", "display: block;");
     expensesAddBtn.setAttribute("style", "display: block;");
 };
 AppData.prototype.addEventListeners = function() {
-    addDigitstValidationEvent(digitsPlaceholderFields);
-    addTextValidationEvent(namesPlaceholderFields);
+    this.addDigitstValidationEvent(digitsPlaceholderFields);
+    this.addTextValidationEvent(namesPlaceholderFields);
 
     calculate.addEventListener("click", () => {
         this.start();
-        blockLeftSideInputs(true);
+        this.blockLeftSideInputs(true);
         calculate.setAttribute("style", "display: none;");
         cancel.setAttribute("style", "display: block;");
     });
 
     cancel.addEventListener("click", () => {
         this.reset();
-        blockLeftSideInputs(false);
+        this.blockLeftSideInputs(false);
         calculate.setAttribute("style", "display: block;");
         cancel.setAttribute("style", "display: none;");
     });
@@ -316,13 +243,87 @@ AppData.prototype.addEventListeners = function() {
         }
     });
 
-    expensesAddBtn.addEventListener("click", this.addExpensesBlock);
-    incomeAddBtn.addEventListener("click", this.addIncomeBlock);
-    periodSelectRange.addEventListener("input", this.periodAmountChange);
+    expensesAddBtn.addEventListener("click", () => {
+        this.addExpensesBlock();
+    });
+    incomeAddBtn.addEventListener("click", () => {
+        this.addIncomeBlock();
+    });
+    periodSelectRange.addEventListener("input", () => {
+        this.periodAmountChange();
+    });
+};
+AppData.prototype.isNumber = function(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+};
+AppData.prototype.rusTextValid = function(string) {
+    let newStr = "",
+        regexp = /[А-я]/,
+        value = string.value;
+
+    for (let i = 0; i < value.length; i++) {
+        if (regexp.test(value[i]) || value[i] === " " || value[i] === ",") {
+            newStr += value[i];
+        }
+    }
+
+    return newStr;
+};
+AppData.prototype.addTextValidationEvent = function(collection) {
+    collection.forEach((item) => {
+        item.addEventListener("input", () => {
+            item.value = this.rusTextValid(item);
+        });
+    });
+};
+AppData.prototype.digitsValid = function(digit) {
+    let newDigits = "",
+        value = digit.value;
+
+    for (let i = 0; i < value.length; i++) {
+        if (this.isNumber(value[i])) {
+            newDigits += value[i];
+        }
+    }
+
+    return newDigits;
+};
+AppData.prototype.addDigitstValidationEvent = function(collection) {
+    collection.forEach((item) => {
+        item.addEventListener("input", () => {
+            item.value = this.digitsValid(item);
+        });
+    });
+};
+AppData.prototype.deleteAllNodeElems = function(parent, childClass) {
+    const elems = parent.querySelectorAll(childClass);
+
+    elems.forEach(function (item) {
+        item.remove();
+    });
+};
+AppData.prototype.blockLeftSideInputs = function(data) {
+    leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
+
+    if (data) {
+        leftSideFieldsCollection.forEach(function (elem) {
+            elem.disabled = true;
+        });
+        incomeAddBtn.disabled = true;
+        expensesAddBtn.disabled = true;
+    } else {
+        leftSideFieldsCollection.forEach(function (elem) {
+            elem.disabled = false;
+        });
+        incomeAddBtn.disabled = false;
+        expensesAddBtn.disabled = false;
+    }
 };
 
 const appData = new AppData();
 appData.addEventListeners();
+
+
 
 
 
