@@ -45,36 +45,18 @@ class AppData {
         this.expensesMonth = 0;
     }
 
-    addExpensesBlock() {
-        const cloneExpensesItem = expensesItems[0].cloneNode(true);
+    addIncExpBlock(items, button) {
+        const cloneIncomeItem = items[0].cloneNode(true),
+            className = items[0].className.split("-")[0];
 
-        expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesAddBtn);
-        expensesItems = document.querySelectorAll(".expenses-items");
+        items[0].parentNode.insertBefore(cloneIncomeItem, button);
+        items = document.querySelectorAll(`.${className}-items`);
+        
+        items[items.length - 1].querySelector(`.${className}-title`).value = "";
+        items[items.length - 1].querySelector(`.${className}-amount`).value = "";
 
-        expensesItems[expensesItems.length - 1].querySelector(".expenses-title").value = "";
-        expensesItems[expensesItems.length - 1].querySelector(".expenses-amount").value = "";
-
-        if (expensesItems.length === 3) {
-            expensesAddBtn.setAttribute("style", "display: none;");
-        }
-
-        namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
-        this.addTextValidationEvent(namesPlaceholderFields);
-
-        digitsPlaceholderFields = document.querySelectorAll("[placeholder=\"Сумма\"]");
-        this.addDigitstValidationEvent(digitsPlaceholderFields);
-    }
-
-    addIncomeBlock() {
-        let cloneIncomeItem = incomeItems[0].cloneNode(true);
-        incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeAddBtn);
-        incomeItems = document.querySelectorAll(".income-items");
-
-        incomeItems[incomeItems.length - 1].querySelector(".income-title").value = "";
-        incomeItems[incomeItems.length - 1].querySelector(".income-amount").value = "";
-
-        if (incomeItems.length === 3) {
-            incomeAddBtn.setAttribute("style", "display: none;");
+        if (items.length === 3) {
+            button.setAttribute("style", "display: none;");
         }
 
         namesPlaceholderFields = document.querySelectorAll("[placeholder=\"Наименование\"]");
@@ -247,10 +229,10 @@ class AppData {
         });
 
         expensesAddBtn.addEventListener("click", () => {
-            this.addExpensesBlock();
+            this.addIncExpBlock(expensesItems, expensesAddBtn);
         });
         incomeAddBtn.addEventListener("click", () => {
-            this.addIncomeBlock();
+            this.addIncExpBlock(incomeItems, incomeAddBtn);
         });
         periodSelectRange.addEventListener("input", () => {
             this.periodAmountChange();
