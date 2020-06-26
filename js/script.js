@@ -16,7 +16,7 @@ const DomElement = function (
 };
 
 DomElement.prototype.createElement = function (parent = "body") {
-    let elemClass = this.selector === "#" ? "p" : "div";
+    let elemClass = this.selector[0] === "#" ? "p" : "div";
 
     this.newElem = document.createElement(elemClass);
     this.styleString = "height: " + this.height + "; width: " + this.width + "; background: " + this.bg +
