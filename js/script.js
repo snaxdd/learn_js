@@ -76,43 +76,44 @@ class AppData {
                 this[className][title] = amount;
             }
         };
-
+        
+        incomeItems = document.querySelectorAll(".income-items");
         incomeItems.forEach(getValues);
+
+        expensesItems = document.querySelectorAll(".expenses-items");
         expensesItems.forEach(getValues);
 
         for (let key in this.income) {
             this.incomeMonth += +this.income[key];
         }
     }
+    
+    getAddIncExp(collection, type) { 
+        let masx = [];
 
-    getAddExpenses() {
-        const addExpenses = addExpensesField.value.split(",");
-
-        addExpenses.forEach((item) => {
-            item = item.trim();
-
-            if (item !== "") {
-                this.addExpenses.push(item);
+        if (typeof collection.value === "string") {
+            masx = collection.value.split(",");
+        } else {
+            for (let item of collection) {
+                masx.push(item.value);
             }
-        });
-    }
+        }
 
-    getAddIncome() {
-        additionalIncomeFields.forEach((item) => {
-            const itemValue = item.value.trim();
+        masx.forEach((item) => {
+            const val = item.trim();
 
-            if (itemValue !== "") {
-                this.addIncome.push(itemValue);
+            if (val !== "") {
+                type.push(val);
             }
         });
     }
 
     start() {
         this.budget = salaryAmountField.value;
+        this.getAddIncExp(additionalIncomeFields, this.addIncome);
+        this.getAddIncExp(addExpensesField, this.addExpenses);  
         this.getIncExp();
         this.getExpensesMonth();
-        this.getAddExpenses();
-        this.getAddIncome();
         this.getBudget();
         this.showResult();
     }
