@@ -117,10 +117,14 @@ class AppData {
         this.getAddIncExp(addExpensesField, this.addExpenses);  
         this.getIncExp();
         this.getExpensesMonth();
-        this.getInfoDeposit();
+        if (this.getInfoDeposit() === false) {
+            return;
+        }
         this.getBudget();
         this.showResult();
         this.blockLeftSideInputs(true);
+        depositBank.disabled = true;
+        depositCheckbox.disabled = true;
         calculate.setAttribute("style", "display: none;");
         cancel.setAttribute("style", "display: block;");
     }
@@ -149,7 +153,7 @@ class AppData {
     getBudget() {
         const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
 
-        this.budgetMonth = (this.budget + this.incomeMonth + monthDeposit) - this.expensesMonth;
+        this.budgetMonth = Math.ceil((this.budget + this.incomeMonth + monthDeposit) - this.expensesMonth);
         this.budgetDay = Math.ceil(this.budgetMonth / 30);
     }
 
@@ -204,7 +208,8 @@ class AppData {
         depositCheckbox.checked = false;
         this.depositHandler();
         calculate.disabled = true;  
-
+        depositBank.disabled = false;
+        depositCheckbox.disabled = false;
         this.deleteAllNodeElems(incomeBlock, ".income-items");
         this.deleteAllNodeElems(expensesBlock, ".expenses-items");
 
@@ -218,13 +223,10 @@ class AppData {
     getInfoDeposit() {
         if (this.deposit) {
             if (depositPercent.value >= 0 && depositPercent.value <= 100) {
-                this.percentDeposit = depositPercent.value;
+                this.percentDeposit = +depositPercent.value;
             } else {
                 alert("Ведите процент от 0 до 100");
-                this.resetApp();
-                depositPercent.disabled = false;
-                calculate.setAttribute("style", "display: block;");
-                cancel.setAttribute("style", "display: none;");  
+                return false;  
             }
 
             this.moneyDeposit = +depositAmount.value;
@@ -235,6 +237,7 @@ class AppData {
         const valueSelect = this.value;
 
         if (valueSelect === "other") {
+            depositPercent.value = "";
             depositPercent.style.display = "inline-block";
         } else {
             depositPercent.style.display = "none";
@@ -244,6 +247,7 @@ class AppData {
 
     depositHandler() {
         if (depositCheckbox.checked) {
+            depositPercent.style.display = "none";
             depositBank.style.display = "inline-block";
             depositAmount.style.display = "inline-block";
             this.deposit = true;
@@ -267,6 +271,7 @@ class AppData {
         });
 
         cancel.addEventListener("click", () => {
+            this.resetApp();
             this.resetFields();
             this.blockLeftSideInputs(false);
             calculate.setAttribute("style", "display: block;");
