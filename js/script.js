@@ -226,6 +226,8 @@ class AppData {
                 this.percentDeposit = +depositPercent.value;
             } else {
                 alert("Ведите процент от 0 до 100");
+                this.resetApp();
+                this.deposit = true;
                 return false;  
             }
 
