@@ -203,6 +203,10 @@ class AppData {
         expensesAddBtn.setAttribute("style", "display: block;");
     }
 
+    depositHandler() {
+        
+    }
+
     addEventListeners() {
         this.addDigitstValidationEvent(digitsPlaceholderFields);
         this.addTextValidationEvent(namesPlaceholderFields);
@@ -238,6 +242,8 @@ class AppData {
         periodSelectRange.addEventListener("input", () => {
             this.periodAmountChange();
         });
+
+        depositCheckbox.addEventListener("change", this.depositHandler.bind(this));
     }
 
     isNumber(num) {
