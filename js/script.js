@@ -21,7 +21,10 @@ const calculate = document.getElementById("start"),
     addExpensesField = document.querySelector(".additional_expenses-item"),
     targetAmountField = document.querySelector(".target-amount"),
     periodSelectRange = document.querySelector(".period-select"),
-    periodAmount = document.querySelector(".period-amount");
+    periodAmount = document.querySelector(".period-amount"),
+    depositBank = document.querySelector(".deposit-bank"),
+    depositAmount = document.querySelector(".deposit-amount"),
+    depositPercent = document.querySelector(".deposit-percent");
 
 let expensesItems = document.querySelectorAll(".expenses-items"),
     incomeItems = document.querySelectorAll(".income-items"),
@@ -204,7 +207,11 @@ class AppData {
     }
 
     depositHandler() {
-        
+        if (depositCheckbox.checked) {
+            console.log('yes!');
+        } else {
+            console.log("no");
+        }
     }
 
     addEventListeners() {
