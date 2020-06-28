@@ -177,7 +177,7 @@ class AppData {
     reset() {
         const allInputs = document.querySelector(".main").querySelectorAll("input[type=text]");
 
-        allInputs.forEach(function (item) {
+        allInputs.forEach( (item) => {
             item.value = "";
         });
 
@@ -221,7 +221,7 @@ class AppData {
             cancel.setAttribute("style", "display: none;");
         });
 
-        salaryAmountField.addEventListener("input", function () {
+        salaryAmountField.addEventListener("input", () => {
             if (salaryAmountField.value !== "") {
                 calculate.disabled = false;
             } else {
@@ -290,7 +290,7 @@ class AppData {
     deleteAllNodeElems(parent, childClass) {
         const elems = parent.querySelectorAll(childClass);
 
-        elems.forEach(function (item) {
+        elems.forEach((item) => {
             item.remove();
         });
     }
@@ -299,13 +299,13 @@ class AppData {
         leftSideFieldsCollection = document.querySelector(".data").querySelectorAll("input[type=text]");
 
         if (data) {
-            leftSideFieldsCollection.forEach(function (elem) {
+            leftSideFieldsCollection.forEach((elem) => {
                 elem.disabled = true;
             });
             incomeAddBtn.disabled = true;
             expensesAddBtn.disabled = true;
         } else {
-            leftSideFieldsCollection.forEach(function (elem) {
+            leftSideFieldsCollection.forEach((elem) => {
                 elem.disabled = false;
             });
             incomeAddBtn.disabled = false;
